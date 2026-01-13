@@ -13,6 +13,10 @@ const PokeCard = ({ pokemon }) => {
 
   const isPokeFavorite = favorites.some(fav => fav.id === pokemon.id);
 
+  const getTypeIconUrl = (typeName) => {
+    return `/icons/${typeName.toLowerCase()}.png`;
+  };
+
   const changeState = (e) => {
     e.stopPropagation();
     if (isPokeFavorite) {
@@ -37,7 +41,23 @@ const PokeCard = ({ pokemon }) => {
     >
       <Meta
         title={`${pokemon.name.toUpperCase()} #${pokemon.id}`}
-        description={`Tipo: ${pokemon.types.map(t => t.type.name).join(', ')}`}
+        description={
+          <div style={{ marginTop: '10px' }}>
+            {/* CORRECCIÓN: Usamos map para iterar sobre los tipos */}
+              {pokemon.types.map((t) => (
+                <img
+                  key={t.type.name}
+                  src={getTypeIconUrl(t.type.name)}
+                  alt={t.type.name}
+                  title={t.type.name}
+                  style={{
+                    width: '50px',
+                    filter: 'drop-shadow(1px 1px 1px rgba(0,0,0,0.2))'
+                  }}
+                />
+              ))}
+          </div>
+        }
       />
       <Button
         type="text"

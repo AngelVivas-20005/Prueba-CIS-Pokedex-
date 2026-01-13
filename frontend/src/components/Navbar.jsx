@@ -1,6 +1,6 @@
 import { Layout, Menu } from 'antd';
 import { useNavigate } from 'react-router-dom';
-import { HomeOutlined, HeartOutlined } from '@ant-design/icons';
+import { HomeOutlined, HeartOutlined, SearchOutlined } from '@ant-design/icons';
 
 const { Header } = Layout;
 
@@ -9,7 +9,8 @@ const Navbar = () => {
 
   const items = [
     { key: '/', label: 'Inicio', icon: <HomeOutlined /> },
-    { key: '/poke-favorites', label: 'Favoritos', icon: <HeartOutlined /> },
+    { key: '/poke-search' , label: 'Busqueda', icon: <SearchOutlined />},
+    { key: '/poke-favorites', label: 'Favoritos', icon: <HeartOutlined /> }
   ];
 
   return (

@@ -4,7 +4,8 @@ import PokeCard from '../components/PokeCard';
 import { PokeCall } from '../services/PokeCall';
 
 function PokeHome() {
-  const [pokemons, setPokemons] = useState([]);
+
+  const [pagePokemons, setPagePokemons] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -16,7 +17,7 @@ function PokeHome() {
     setIsLoading(true);
     try {
       const data = await PokeCall(currentIndex);
-      setPokemons(data);
+      setPagePokemons(data);
 
     } catch (error) {
       console.error("Error cargando los pokemons ", error);
@@ -67,34 +68,34 @@ function PokeHome() {
             Pokédex - Primeras dos Generaciones
           </h1>
           <Row justify="center">
-            {pokemons && pokemons.map((pokemon) => (
+            {pagePokemons && pagePokemons.map((pokemon) => (
               <PokeCard key={pokemon.id} pokemon={pokemon} />
             ))}
           </Row>
 
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-              {/* Botón Anterior */}
-              <button onClick={lastPage} disabled={currentIndex === 0 || isLoading}>
-                Anterior
-              </button>
+            {/* Botón Anterior */}
+            <button onClick={lastPage} disabled={currentIndex === 0 || isLoading}>
+              Anterior
+            </button>
 
-              {/* Círculos de numeración dinámica */}
-              {getPageNumbers().map((page) => (
-                <button
-                  key={page}
-                  shape="circle"
-                  type={currentIndex === page ? 'primary' : 'default'}
-                  onClick={() => setCurrentIndex(page)}
-                  disabled={isLoading}
-                >
-                  {page + 1}
-                </button>
-              ))}
-
-              {/* Botón Siguiente */}
-              <button onClick={nextPage} disabled={currentIndex === 25 || isLoading}>
-                Siguiente
+            {/* Círculos de numeración dinámica */}
+            {getPageNumbers().map((page) => (
+              <button
+                key={page}
+                shape="circle"
+                type={currentIndex === page ? 'primary' : 'default'}
+                onClick={() => setCurrentIndex(page)}
+                disabled={isLoading}
+              >
+                {page + 1}
               </button>
+            ))}
+
+            {/* Botón Siguiente */}
+            <button onClick={nextPage} disabled={currentIndex === 25 || isLoading}>
+              Siguiente
+            </button>
 
           </div>
 

@@ -7,6 +7,7 @@ import { PokeFavoritesProvider } from './context/PokeContextFavorites';
 import PokeHome from './pages/PokeHome';
 import PokeData from './pages/PokeData';
 import PokeFavorites from './pages/PokeFavorites';
+import PokeSearch from './pages/PokeRegexSearch';
 import Navbar from './components/Navbar'
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
           <Route path="/" element={<PokeHome />} />
           <Route path="/poke-data/:id" element={<PokeData />} />
           <Route path="/poke-favorites" element={<PokeFavorites />} />
+          <Route path="/poke-search" element={<PokeSearch />} />
 
         </Routes>
 

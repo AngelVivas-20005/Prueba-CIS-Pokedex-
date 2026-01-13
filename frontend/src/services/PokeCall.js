@@ -16,3 +16,16 @@ export const PokeCall = async (page) => {
     return Promise.all(promise);
 
 }
+
+export const PokeSearch = async (searchTerm) => {
+    const pokeRegex = await fetch(`${BASE_URL}/pokemon?limit=251`);
+    const data = await pokeRegex.json();
+
+    const promise = data.results.map(async (pokemon) => {
+        const poke = await fetch(pokemon.url);
+        return await poke.json();
+    })
+
+    return Promise.all(promise);
+
+}
