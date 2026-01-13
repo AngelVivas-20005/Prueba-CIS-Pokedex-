@@ -74,12 +74,11 @@ function PokeHome() {
           </Row>
 
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-            {/* Botón Anterior */}
+   
             <button onClick={lastPage} disabled={currentIndex === 0 || isLoading}>
               Anterior
             </button>
 
-            {/* Círculos de numeración dinámica */}
             {getPageNumbers().map((page) => (
               <button
                 key={page}
@@ -92,7 +91,6 @@ function PokeHome() {
               </button>
             ))}
 
-            {/* Botón Siguiente */}
             <button onClick={nextPage} disabled={currentIndex === 25 || isLoading}>
               Siguiente
             </button>

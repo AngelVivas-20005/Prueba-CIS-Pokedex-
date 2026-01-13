@@ -16,7 +16,7 @@ function PokeData() {
   const pokeFetch = async () => {
     try {
       const respuesta = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      const data = await respuesta.json(); // FALTABA ESTA LÍNEA
+      const data = await respuesta.json();
       setPokemon(data);
     } catch (error) {
       console.error("Error cargando los pokemons ", error)
@@ -25,9 +25,13 @@ function PokeData() {
     }
   }
 
+  const getTypeIconUrl = (typeName) => {
+    return `/icons/${typeName.toLowerCase()}.png`;
+  };
+
   return (
     <>
-      {isLoading || !pokemon ? ( 
+      {isLoading || !pokemon ? (
         <div style={{ textAlign: 'center', marginTop: '50px' }}>
           <Spin size="large" />
         </div>
@@ -56,9 +60,24 @@ function PokeData() {
                 ))}
               </Descriptions.Item>
               <Descriptions.Item label="Tipos">
-                {pokemon.types.map(t => (
-                  <Tag color="green" key={t.type.name}>{t.type.name}</Tag>
-                ))}
+                <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                  {pokemon.types.map(t => (
+                    <div key={t.type.name} style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                      <img
+                        src={getTypeIconUrl(t.type.name)}
+                        alt={t.type.name}
+                        style={{
+                          width: '60px',
+                          height: '60px',
+                          objectFit: 'contain',
+                          filter: 'drop-shadow(1px 1px 1px rgba(0,0,0,0.2))'
+                        }}
+
+                        onError={(e) => { e.target.style.display = 'none'; }}
+                      />
+                    </div>
+                  ))}
+                </div>
               </Descriptions.Item>
             </Descriptions>
           </Card>

@@ -43,7 +43,7 @@ const PokeCard = ({ pokemon }) => {
         title={`${pokemon.name.toUpperCase()} #${pokemon.id}`}
         description={
           <div style={{ marginTop: '10px' }}>
-            {/* CORRECCIÓN: Usamos map para iterar sobre los tipos */}
+
               {pokemon.types.map((t) => (
                 <img
                   key={t.type.name}
@@ -59,6 +59,7 @@ const PokeCard = ({ pokemon }) => {
           </div>
         }
       />
+
       <Button
         type="text"
         icon={isPokeFavorite ? <HeartFilled style={{ color: 'red' }} /> : <HeartOutlined />}
@@ -67,6 +68,7 @@ const PokeCard = ({ pokemon }) => {
       >
         {isPokeFavorite ? 'Quitar' : 'Favorito'}
       </Button>
+      
     </Card>
   );
 }
