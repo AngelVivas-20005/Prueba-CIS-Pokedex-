@@ -1,4 +1,4 @@
-import { Row, Spin } from 'antd';
+import { Spin } from 'antd';
 import { useState, useEffect, useContext } from 'react';
 
 import PokeCard from '../components/PokeCard';
@@ -126,27 +126,28 @@ function PokeHome() {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 min-h-screen">
 
-      <div className='flex gap-4 justify-center items-end mb-10'>
-        <div className='flex flex-col'>
-          <label className='mb-2 text-xs font-bold uppercase text-slate-400 tracking-wider'>Número ID</label>
+      <div className='flex flex-col md:flex-row gap-4 justify-center items-stretch md:items-end mb-10 max-w-2xl sm:w-xl mx-auto'>
+        
+        <div className='flex flex-col flex-1'>
+          <label className='mb-2 text-xs font-bold uppercase text-slate-400 tracking-wider '>Número ID</label>
           <input
             type="text"
             placeholder="Ej: 001"
             value={searchTermNumber}
-            onChange={(e) => setSearchTermNumber(e.target.value.replace())}
-            className='p-2 text-slate-600 border bg-white rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-red-400 outline-none disabled:opacity-30'
+            onChange={(e) => setSearchTermNumber(e.target.value.replace(/\D/g, ''))}
+            className='w-full p-3 md:p-2 text-slate-600 border bg-white rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-red-400 outline-none disabled:opacity-30'
             disabled={searchTermName !== ""}
           />
         </div>
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col flex-1'>
           <label className='mb-2 text-xs font-bold uppercase text-slate-400 tracking-wider'>Nombre</label>
           <input
             type="text"
             placeholder="Ej: Pikachu"
             value={searchTermName}
             onChange={(e) => setSearchTermName(e.target.value)}
-            className='p-2 text-slate-600 border bg-white rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-red-400 outline-none disabled:opacity-30'
+            className='w-full p-3 md:p-2 text-slate-600 border bg-white rounded-xl border-slate-300 shadow-sm focus:ring-2 focus:ring-red-400 outline-none disabled:opacity-30'
             disabled={searchTermNumber !== ""}
           />
         </div>
@@ -182,18 +183,44 @@ function PokeHome() {
                 ))}
               </div>
 
-              <div className="flex justify-center items-center gap-2 sticky bottom-4 bg-white/80 backdrop-blur-md rounded-2xl border border-slate-300 shadow-lg w-fit mx-auto p-2 z-50">
-                <button onClick={lastPage} disabled={currentIndex === 0} className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors text-slate-600 hover:bg-gray-200">Anterior</button>
-                <div className="flex gap-1">
-                  {getPageNumbers().map((page) => (
-                    <button key={page} onClick={() => setCurrentIndex(page)} className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentIndex === page
-                      ? 'bg-red-100 text-red-600 shadow-md shadow-black-200 border border-red-300'
+              <div className="fixed bottom-4 left-0 right-0 flex justify-center px-2 z-50">
+                <div className="flex items-center gap-1 sm:gap-2 bg-white/90 backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-slate-300 shadow-lg max-w-full overflow-x-auto no-scrollbar">
 
-                      : 'text-slate-600 border hover:bg-gray-200'
-                      }`}>{page + 1}</button>
-                  ))}
+                  <button
+                    onClick={lastPage}
+                    disabled={currentIndex === 0}
+                    className="px-3 sm:px-4 py-2 bg-white border rounded-lg text-sm font-bold disabled:opacity-30 transition-colors text-slate-600 hover:bg-gray-200 flex items-center justify-center"
+                  >
+
+                    <span className="sm:hidden">←</span>
+
+                    <span className="hidden sm:block">Anterior</span>
+                  </button>
+
+                  <div className="flex gap-1">
+                    {getPageNumbers().map((page) => (
+                      <button
+                        key={page}
+                        onClick={() => setCurrentIndex(page)}
+                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-xs sm:text-sm font-bold transition-all ${currentIndex === page
+                          ? 'bg-red-100 text-red-600 border border-red-300'
+                          : 'text-slate-600 border hover:bg-gray-100'
+                          }`}
+                      >
+                        {page + 1}
+                      </button>
+                    ))}
+                  </div>
+
+                  <button
+                    onClick={nextPage}
+                    disabled={currentIndex === 25}
+                    className="px-3 sm:px-4 py-2 bg-white border rounded-lg text-sm font-bold disabled:opacity-30 transition-colors text-slate-600 hover:bg-gray-200 flex items-center justify-center"
+                  >
+                    <span className="sm:hidden">→</span>
+                    <span className="hidden sm:block">Siguiente</span>
+                  </button>
                 </div>
-                <button onClick={nextPage} disabled={currentIndex === 25} className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors text-slate-600 hover:bg-gray-200">Siguiente</button>
               </div>
             </>
           )}
