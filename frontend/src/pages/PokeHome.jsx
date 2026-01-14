@@ -1,12 +1,14 @@
 import { Row, Spin } from 'antd';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+
 import PokeCard from '../components/PokeCard';
 import { PokeCall } from '../services/PokeCall';
+import { PokeFavoritesContext } from '../context/PokeContextFavorites';
 
 function PokeHome() {
 
   const [pagePokemons, setPagePokemons] = useState([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const { currentIndex, setCurrentIndex} = useContext(PokeFavoritesContext);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -27,13 +29,15 @@ function PokeHome() {
     }
   }
 
-  const lastPage = () => {
+  const lastPage = (e) => {
+    e.preventDefault();
     if (currentIndex > 0) {
       setCurrentIndex(currentIndex - 1)
     };
   };
 
-  const nextPage = () => {
+  const nextPage = (e) => {
+    e.preventDefault();
     if (currentIndex < 25) {
       setCurrentIndex(currentIndex + 1)
     };
@@ -72,11 +76,12 @@ function PokeHome() {
             ))}
           </div>
 
-          <div className="flex justify-center items-center gap-2 mt-8 mb-12">
+            
+          <div className="flex justify-center items-center gap-2 sticky bottom-4 bg-white rounded-2xl border border-slate-400 shadow-s left-0 w-fit mx-auto p-2">
             <button
               onClick={lastPage}
               disabled={currentIndex === 0 || isLoading}
-              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-10 transition-colors text-slate-600 hover:bg-red-100"
+              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors text-slate-600 hover:bg-gray-200"
             >
               Anterior
             </button>
@@ -89,7 +94,7 @@ function PokeHome() {
                   disabled={isLoading}
                   className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentIndex === page
                     ? 'bg-red-100 text-red-600 shadow-md shadow-black-200 border border-red-300'
-                    : 'text-slate-600 border hover:bg-red-100'
+                    : 'text-slate-600 border hover:bg-gray-200'
                     }`}
                 >
                   {page + 1}
@@ -100,7 +105,7 @@ function PokeHome() {
             <button
               onClick={nextPage}
               disabled={currentIndex === 25 || isLoading}
-              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-100 transition-colors text-slate-600 hover:bg-red-100"
+              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-40 transition-colors text-slate-600 hover:bg-gray-200"
             >
               Siguiente
             </button>

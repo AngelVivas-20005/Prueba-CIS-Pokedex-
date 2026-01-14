@@ -4,7 +4,7 @@ import PokeCard from '../components/PokeCard';
 import { Row, Empty } from 'antd';
 
 function PokeFavorites() {
-    const { favorites } = useContext(PokeFavoritesContext); 
+    const { favorites } = useContext(PokeFavoritesContext);
 
     return (
         <div style={{ padding: '20px' }}>
@@ -12,11 +12,11 @@ function PokeFavorites() {
             {favorites.length === 0 ? (
                 <Empty description="No tienes pokémon guardados en favoritos" />
             ) : (
-                <Row justify="center">
-                    {favorites.map(pokemon => (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-6 justify-items-center">
+                    {favorites.map((pokemon) => (
                         <PokeCard key={pokemon.id} pokemon={pokemon} />
                     ))}
-                </Row>
+                </div>
             )}
         </div>
     )

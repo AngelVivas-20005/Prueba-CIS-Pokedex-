@@ -12,7 +12,7 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white border border-slate-400 shadow-sm">
+    <nav className="sticky top-0 z-50 w-full bg-white rounded-2xl border border-slate-400 shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
 
@@ -36,10 +36,10 @@ const Navbar = () => {
               <button
                 key={item.key}
                 onClick={() => navigate(item.key)}
-                className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-medium transition-all hover:scale-105
+                className={`flex items-center gap-2 px-6 py-2 rounded-lg text-sm font-medium transition-all hover:scale-102
                   ${location.pathname === item.key
                     ? 'bg-red-100 text-red-600 border border-red-300'
-                    : 'text-slate-600 border hover:bg-red-100'
+                    : 'text-slate-600 border hover:bg-gray-200'
                   }`}
               >
                 <span className="text-lg">{item.icon}</span>

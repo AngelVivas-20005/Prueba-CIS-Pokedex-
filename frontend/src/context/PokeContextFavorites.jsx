@@ -4,6 +4,8 @@ export const PokeFavoritesContext = createContext();
 
 export const PokeFavoritesProvider = ({ children }) => {
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
   const [favorites, setFavorites] = useState(() => {
     const saved = localStorage.getItem('poke_favorites');
     return saved ? JSON.parse(saved) : [];
@@ -24,7 +26,7 @@ export const PokeFavoritesProvider = ({ children }) => {
   };
   
   return (
-    <PokeFavoritesContext.Provider value={{ favorites, addFavorite, removeFavorite }}>
+    <PokeFavoritesContext.Provider value={{ favorites, currentIndex, setCurrentIndex, addFavorite, removeFavorite }}>
       {children}
     </PokeFavoritesContext.Provider>
   );
