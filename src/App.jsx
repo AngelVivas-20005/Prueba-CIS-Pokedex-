@@ -31,7 +31,7 @@ function App() {
 
         </div>
 
-        <footer className="text-center py-6 text-slate-500 text-sm">
+        <footer className="text-center text-slate-500 text-sm mt-0">
           Pokédex App - Prueba Técnica {new Date().getFullYear()}
         </footer>
 

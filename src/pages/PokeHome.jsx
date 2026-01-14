@@ -159,7 +159,6 @@ function PokeHome() {
         </div>
       ) : (
         <div className="flex flex-col gap-10">
-
           {isSearching ? (
             <div className="min-h-[60vh]">
               {searchPokemons.length > 0 ? (
