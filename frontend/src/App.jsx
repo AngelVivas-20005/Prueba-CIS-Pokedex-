@@ -29,11 +29,11 @@ function App() {
           </Routes>
         </main>
 
-
-        <footer className="text-center py-6 text-slate-500 text-sm">
-          Pokédex App - Prueba Técnica {new Date().getFullYear()}
-        </footer>
       </div>
+
+      <footer className="text-center py-6 text-slate-500 text-sm">
+        Pokédex App - Prueba Técnica {new Date().getFullYear()}
+      </footer>
 
     </BrowserRouter>
   </PokeFavoritesProvider>

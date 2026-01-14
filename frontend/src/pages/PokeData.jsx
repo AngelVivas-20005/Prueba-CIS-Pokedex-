@@ -28,6 +28,10 @@ function PokeData() {
     }
   }
 
+  const capitalizeName = (name) => {
+    return name.charAt(0).toUpperCase() + name.slice(1)
+  }
+
   const getTypeIconUrl = (typeName) => {
     return `/icons/${typeName.toLowerCase()}.png`;
   };
@@ -48,7 +52,9 @@ function PokeData() {
         <div className="flex justify-center items-center h-48">
           <Spin size="large" />
         </div>
+        
       ) : (
+
         <div className="w-full max-w-lg justify-items-center">
 
           <button
@@ -60,7 +66,7 @@ function PokeData() {
 
           <div className="bg-whiteborder-2 border-slate-800 border-2 rounded-2xl overflow-hidden">
 
-            <div className="px-3 py-2 border-b-2 border-slate-800 flex justify-between items-center">
+            <div className="px-3 py-2 border-b-2 bg-white border-slate-800 flex justify-between items-center">
               <h1 className="text-xl sm:text-2xl font-black text-black uppercase tracking-tight">
                 {pokemon.name}
               </h1>
@@ -69,10 +75,10 @@ function PokeData() {
               </span>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 bg-white">
 
               <div className="relative flex items-center justify-center bg-slate-50 border-b-2 md:border-b-0 md:border-r-2 border-slate-800 p-4 min-h-[250px]">
-                <div className="absolute top-2 right-2 flex flex-col gap-2 z-10">
+                <div className="absolute top-2 right-2 flex flex-col gap-2 z-10 ">
                   <button
                     onClick={() => setShowPixel(!showPixel)}
                     className={`p-2 rounded-xl border-2 border-slate-800 transition-all active:shadow-none ${showPixel ? 'bg-red-100 text-red-600 border-red-300' : 'bg-white text-slate-600 hover:bg-gray-200'}`}
@@ -90,28 +96,22 @@ function PokeData() {
                   </button>
                 </div>
 
-                {/* Contenedor de imagen responsivo */}
                 <div className="relative w-48 h-48 sm:w-56 sm:h-56 flex items-center justify-center">
                   <img
                     key={getPokemonImage()}
                     src={getPokemonImage()}
                     alt={pokemon.name}
                     className={`
-      absolute transition-all duration-300 animate-fade-in drop-shadow-2xl
-      ${showPixel
-                        ? 'w-44 h-44 rendering-pixelated scale-[1.42]' // Aquí forzamos el tamaño del pixel
-                        : 'w-full h-full object-contain scale-100'    // El artwork normal se mantiene igual
-                      }
-    `}
+                                absolute transition-all duration-300 animate-fade-in drop-shadow-2xl
+                                ${showPixel ? 'w-44 h-44 rendering-pixelated scale-[1.42]' : 'w-full h-full object-contain scale-100'  }
+                              `}
                   />
                 </div>
               </div>
 
-              {/* SECCIÓN DETALLES: Textos más pequeños */}
               <div className="flex flex-col text-sm">
 
-                {/* Info Técnica */}
-                <div className="p-2 border-b-2 border-slate-800 rounded-lg" >
+                <div className="p-2 border-b-2 bg-white border-slate-800 rounded-lg" >
                   <h2 className="font-medium mb-3 text-slate-600">Información</h2>
                   <div className="grid grid-cols-2 gap-4">
                     <div className=" p-1 border border-slate-300 rounded-lg">
@@ -125,7 +125,6 @@ function PokeData() {
                   </div>
                 </div>
 
-                {/* Habilidades */}
                 <div className="p-2 border-b-2 border-slate-800  bg-white rounded-lg">
                   <h2 className="font-medium mb-3 text-slate-600 justify-content: center ">Habilidades</h2>
                   <div className="flex flex-wrap gap-1.5 justify-center">
@@ -156,9 +155,9 @@ function PokeData() {
               </div>
             </div>
 
-            <div className="md:col-span-2 p-5 bg-slate-50 border-t-2 border-slate-800">
+            <div className="md:col-span-2 p-5 bg-white border-t-2 border-slate-800">
               <h2 className="font-medium mb-3 text-slate-600 justify-content: center">
-                Movimientos que {pokemon.name} puede aprender
+                Movimientos que {capitalizeName(pokemon.name)} puede aprender
               </h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 max-h-45 overflow-y-auto pr-2 custom-scrollbar">
                 {pokemon.moves.map((m) => (

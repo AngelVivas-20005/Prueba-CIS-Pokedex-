@@ -71,12 +71,12 @@ const PokeCard = ({ pokemon }) => {
         <img
           alt={`${pokemon.name} pixel`}
           src={pokemon.sprites.front_default}
-          className={`absolute w-28 max-w-24 rendering-pixelated transition-opacity duration-500 ease-in-out ${showPixel ? 'opacity-100' : 'opacity-0'
+          className={`absolute w-28 rendering-pixelated transition-opacity duration-500 ease-in-out resize-162 ${showPixel ? 'opacity-100' : 'opacity-0'
             }`}
         />
       </div>
 
-      <div className="text-center mb-4">
+      <div className="text-center mb-2">
         <span className="text-xs font-bold text-slate-400 block mb-1">
           #{String(pokemon.id).padStart(3, '0')}
         </span>
@@ -89,7 +89,7 @@ const PokeCard = ({ pokemon }) => {
         {pokemon.types.map((t) => (
           <div
             key={t.type.name}
-            className="flex items-center py-1"
+            className="flex items-center"
           >
             <img
               src={getTypeIconUrl(t.type.name)}

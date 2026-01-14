@@ -7,13 +7,11 @@
 
 @layer base {
   body {
-    /* bg-slate-50 es un gris muy claro que hace resaltar las cards blancas */
     @apply bg-slate-50 text-slate-900 m-0 p-0 font-sans;
     
   }
 }
 
-/* Reset para que Ant Design no rompa el diseño de Tailwind */
 .ant-btn {
   @apply shadow-none;
 }
