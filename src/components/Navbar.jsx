@@ -7,7 +7,6 @@ const Navbar = () => {
 
   const items = [
     { key: '/', label: 'Inicio', icon: <HomeOutlined /> },
-    { key: '/poke-search', label: 'Búsqueda', icon: <SearchOutlined /> },
     { key: '/poke-favorites', label: 'Favoritos', icon: <HeartOutlined /> }
   ];
 
