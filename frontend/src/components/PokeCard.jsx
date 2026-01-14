@@ -9,6 +9,7 @@ const { Meta } = Card;
 const PokeCard = ({ pokemon }) => {
 
   const { favorites, addFavorite, removeFavorite } = useContext(PokeFavoritesContext);
+  const [showPixel, setShowPixel] = useState(false);
   const navigate = useNavigate();
 
   const isPokeFavorite = favorites.some(fav => fav.id === pokemon.id);

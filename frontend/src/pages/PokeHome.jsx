@@ -57,51 +57,57 @@ function PokeHome() {
 
 
   return (
-    <>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+
       {isLoading ? (
-        <div style={{ textAlign: 'center', marginTop: '50px' }}>
+        <div className="flex justify-center items-center min-h-400">
           <Spin size="large" />
         </div>
       ) : (
-        <div style={{ padding: '20px' }}>
-          <h1 style={{ textAlign: 'center' }}>
-            Pokédex - Primeras dos Generaciones
-          </h1>
-          <Row justify="center">
+        <div className="flex flex-col gap-10">
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
             {pagePokemons && pagePokemons.map((pokemon) => (
               <PokeCard key={pokemon.id} pokemon={pokemon} />
             ))}
-          </Row>
+          </div>
 
-          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '20px' }}>
-   
-            <button onClick={lastPage} disabled={currentIndex === 0 || isLoading}>
+          <div className="flex justify-center items-center gap-2 mt-8 mb-12">
+            <button
+              onClick={lastPage}
+              disabled={currentIndex === 0 || isLoading}
+              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-10 transition-colors text-slate-600 hover:bg-red-100"
+            >
               Anterior
             </button>
 
-            {getPageNumbers().map((page) => (
-              <button
-                key={page}
-                shape="circle"
-                type={currentIndex === page ? 'primary' : 'default'}
-                onClick={() => setCurrentIndex(page)}
-                disabled={isLoading}
-              >
-                {page + 1}
-              </button>
-            ))}
+            <div className="flex gap-1">
+              {getPageNumbers().map((page) => (
+                <button
+                  key={page}
+                  onClick={() => setCurrentIndex(page)}
+                  disabled={isLoading}
+                  className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${currentIndex === page
+                    ? 'bg-red-100 text-red-600 shadow-md shadow-black-200 border border-red-300'
+                    : 'text-slate-600 border hover:bg-red-100'
+                    }`}
+                >
+                  {page + 1}
+                </button>
+              ))}
+            </div>
 
-            <button onClick={nextPage} disabled={currentIndex === 25 || isLoading}>
+            <button
+              onClick={nextPage}
+              disabled={currentIndex === 25 || isLoading}
+              className="px-4 py-2 bg-white border rounded-lg text-sm font-semibold disabled:opacity-100 transition-colors text-slate-600 hover:bg-red-100"
+            >
               Siguiente
             </button>
-
           </div>
-
         </div>
-
-
       )}
-    </>
+    </div>
   );
 }
 
