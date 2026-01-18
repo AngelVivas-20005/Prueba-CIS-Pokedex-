@@ -2,13 +2,20 @@ import { Spin } from 'antd';
 import { useState, useEffect, useContext } from 'react';
 
 import PokeCard from '../components/PokeCard';
+import PaginationBar from '../components/PaginationBar';
 import { PokeCall, PokeSearch } from '../services/PokeCall';
-import { PokeFavoritesContext } from '../context/PokeContextFavorites';
+
 
 function PokeHome() {
 
+  const [allPokemons, setAllPokemons] = useState([]);
   const [pagePokemons, setPagePokemons] = useState([]);
+  const [searchPokemons, setSearchPokemons] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchIndex, setSearchIndex] = useState(0);
+  const [searchTermName, setSearchTermName] = useState("");
+  const [searchTermNumber, setSearchTermNumber] = useState("");
+  const [searchPages, setSearchPages] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -16,14 +23,13 @@ function PokeHome() {
     pokeFetch(currentIndex);
   }, [currentIndex]);
 
-  const [allPokemons, setAllPokemons] = useState([]);
-  const [searchPokemons, setSearchPokemons] = useState([]);
-  const [searchTermName, setSearchTermName] = useState("");
-  const [searchTermNumber, setSearchTermNumber] = useState("");
-
   useEffect(() => {
     allPokemon();
   }, []);
+
+  useEffect(() => {
+    setSearchIndex(0);
+  }, [searchTermName, searchTermNumber]);
 
   useEffect(() => {
     if (searchTermName.trim() === "" && searchTermNumber.trim() === "") {
@@ -37,10 +43,10 @@ function PokeHome() {
       setIsSearching(true)
       let matches = [];
 
+
       if (searchTermName !== "") {
         const regex = new RegExp(searchTermName, 'i');
         matches = allPokemons.filter(pokemon => regex.test(pokemon.name));
-        console.log("ddddddddd")
       }
 
       if (searchTermNumber !== "") {
@@ -53,16 +59,16 @@ function PokeHome() {
 
           return regex.test(idStr) || regex.test(idPadded);
         });
-        console.log("mmmmmmmmmm")
-      }
 
-      setSearchPokemons(matches);
-      console.log(matches)
+      }
+      setSearchPages(matches.length / 10)
+      setSearchPokemons(matches.slice(searchIndex * 10, (searchIndex * 10) + 10));
+
     } catch (e) {
       setSearchPokemons([]);
       setIsSearching(false);
     }
-  }, [searchTermName, searchTermNumber, allPokemons]);
+  }, [searchIndex, searchTermName, searchTermNumber, allPokemons]);
 
   const allPokemon = async () => {
 
@@ -92,43 +98,12 @@ function PokeHome() {
     }
   }
 
-  const lastPage = (e) => {
-    e.preventDefault();
-    if (currentIndex > 0) {
-      setCurrentIndex(currentIndex - 1)
-    };
-  };
-
-  const nextPage = (e) => {
-    e.preventDefault();
-    if (currentIndex < 25) {
-      setCurrentIndex(currentIndex + 1)
-    };
-  };
-
-  const getPageNumbers = () => {
-    const totalPages = (allPokemons.length / 10);
-    console.log(totalPages)
-    let start = Math.max(0, currentIndex - 2);
-    let end = Math.min(totalPages - 1, start + 4);
-
-    if (end - start < 4) {
-      start = Math.max(0, end - 4);
-    }
-
-    const pages = [];
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-    return pages;
-  };
-
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8 min-h-screen">
 
       <div className='flex flex-col md:flex-row gap-4 justify-center items-stretch md:items-end mb-10 max-w-2xl sm:w-xl mx-auto'>
-        
+
         <div className='flex flex-col flex-1'>
           <label className='mb-2 text-xs font-bold uppercase text-slate-400 tracking-wider '>Número ID</label>
           <input
@@ -162,12 +137,26 @@ function PokeHome() {
         <div className="flex flex-col gap-10">
           {isSearching ? (
             <div className="min-h-[60vh]">
+
               {searchPokemons.length > 0 ? (
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
-                  {searchPokemons.map((pokemon) => (
-                    <PokeCard key={pokemon.id} pokemon={pokemon} />
-                  ))}
-                </div>
+
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 justify-items-center">
+
+                    {searchPokemons.map((pokemon) => (
+                      <PokeCard key={pokemon.id} pokemon={pokemon}
+
+                      />
+                    ))}
+                  </div>
+
+                  <PaginationBar
+                    currentIndex={searchIndex}
+                    setCurrentIndex={setSearchIndex}
+                    totalPages={(Math.ceil(searchPages))}
+                  />
+
+                </>
               ) : (
                 <div className="text-center mt-20 text-slate-400">
                   <p className="text-xl">No se encontraron coincidencias para tu búsqueda.</p>
@@ -183,45 +172,12 @@ function PokeHome() {
                 ))}
               </div>
 
-              <div className="fixed bottom-4 left-0 right-0 flex justify-center px-2 z-50">
-                <div className="flex items-center gap-1 sm:gap-2 bg-white/90 backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-slate-300 shadow-lg max-w-full overflow-x-auto no-scrollbar">
+              <PaginationBar
+                currentIndex={currentIndex}
+                setCurrentIndex={setCurrentIndex}
+                totalPages={130}
+              />
 
-                  <button
-                    onClick={lastPage}
-                    disabled={currentIndex === 0}
-                    className="px-3 sm:px-4 py-2 bg-white border rounded-lg text-sm font-bold disabled:opacity-30 transition-colors text-slate-600 hover:bg-gray-200 flex items-center justify-center"
-                  >
-
-                    <span className="sm:hidden">←</span>
-
-                    <span className="hidden sm:block">Anterior</span>
-                  </button>
-
-                  <div className="flex gap-1">
-                    {getPageNumbers().map((page) => (
-                      <button
-                        key={page}
-                        onClick={() => setCurrentIndex(page)}
-                        className={`w-8 h-8 sm:w-10 sm:h-10 rounded-lg text-xs sm:text-sm font-bold transition-all ${currentIndex === page
-                          ? 'bg-red-100 text-red-600 border border-red-300'
-                          : 'text-slate-600 border hover:bg-gray-100'
-                          }`}
-                      >
-                        {page + 1}
-                      </button>
-                    ))}
-                  </div>
-
-                  <button
-                    onClick={nextPage}
-                    disabled={currentIndex === 25}
-                    className="px-3 sm:px-4 py-2 bg-white border rounded-lg text-sm font-bold disabled:opacity-30 transition-colors text-slate-600 hover:bg-gray-200 flex items-center justify-center"
-                  >
-                    <span className="sm:hidden">→</span>
-                    <span className="hidden sm:block">Siguiente</span>
-                  </button>
-                </div>
-              </div>
             </>
           )}
         </div>
