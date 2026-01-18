@@ -8,7 +8,7 @@ import { PokeFavoritesContext } from '../context/PokeContextFavorites';
 function PokeHome() {
 
   const [pagePokemons, setPagePokemons] = useState([]);
-  const { currentIndex, setCurrentIndex } = useContext(PokeFavoritesContext);
+  const [currentIndex, setCurrentIndex] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [isSearching, setIsSearching] = useState(false);
 
@@ -107,7 +107,8 @@ function PokeHome() {
   };
 
   const getPageNumbers = () => {
-    const totalPages = 26;
+    const totalPages = (allPokemons.length / 10);
+    console.log(totalPages)
     let start = Math.max(0, currentIndex - 2);
     let end = Math.min(totalPages - 1, start + 4);
 

@@ -18,7 +18,7 @@ export const PokeCall = async (page) => {
 }
 
 export const PokeSearch = async () => {
-    const pokeRegex = await fetch(`${BASE_URL}/pokemon?limit=251`);
+    const pokeRegex = await fetch(`${BASE_URL}/pokemon?limit=1300`);
     const data = await pokeRegex.json();
 
     const promise = data.results.map(async (pokemon) => {
