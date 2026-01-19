@@ -1,5 +1,3 @@
-import { useState } from 'react'
-
 const PaginationBar = ({ currentIndex, setCurrentIndex, totalPages }) => {
 
   const lastPage = (e) => {
@@ -38,8 +36,6 @@ const PaginationBar = ({ currentIndex, setCurrentIndex, totalPages }) => {
       {(totalPages > 1) ? (
         <div className="flex items-center gap-1 sm:gap-2 bg-white/90 backdrop-blur-md p-1.5 sm:p-2 rounded-2xl border border-slate-300 shadow-lg max-w-full overflow-x-auto no-scrollbar">
 
-
-
           <button
             onClick={lastPage}
             disabled={currentIndex === 0}
@@ -68,7 +64,7 @@ const PaginationBar = ({ currentIndex, setCurrentIndex, totalPages }) => {
 
           <button
             onClick={nextPage}
-            disabled={currentIndex === 25}
+            disabled={currentIndex === totalPages - 1}
             className="px-3 sm:px-4 py-2 bg-white border rounded-lg text-sm font-bold disabled:opacity-30 transition-colors text-slate-600 hover:bg-gray-200 flex items-center justify-center"
           >
             <span className="sm:hidden">→</span>
@@ -76,15 +72,9 @@ const PaginationBar = ({ currentIndex, setCurrentIndex, totalPages }) => {
           </button>
         </div>
 
-
-
       ) : (
-
         <>
-
         </>
-
-
       )}
     </div>
   );

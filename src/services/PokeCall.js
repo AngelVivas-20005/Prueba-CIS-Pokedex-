@@ -2,7 +2,7 @@ const BASE_URL = 'https://pokeapi.co/api/v2';
 
 export const PokeCall = async (page) => {
     const skip = page * 10;
-    const limit = (page !== 25) ? 10 : 1 
+    const limit = 10;  
 
     console.log(page);
     const pokemons = await fetch(`${BASE_URL}/pokemon?limit=${limit}&offset=${skip}`);
